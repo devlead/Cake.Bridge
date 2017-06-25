@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <AssemblyName>Cake.Bridge</AssemblyName>
+    <PackageId>Cake.Bridge</PackageId>
+    <PackageTags>Cake;Build</PackageTags>
+    <Version>0.0.1</Version>
+    <Authors>Mattias Karlsson</Authors>
+    <Company>WCOM AB</Company>
+    <Copyright>Copyright (c) WCOM AB</Copyright>
+    <Description>Assembly which makes it easier for other environments and languages to interop with Cake</Description>
+    <PackageProjectUrl>https://github.com/devlead/Cake.Bridge</PackageProjectUrl>
+    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/devlead/Cake.Bridge/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/devlead/Cake.Bridge</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Common" Version="0.20.0" />
+    <PackageReference Include="Cake.Core" Version="0.20.0" />
+  </ItemGroup>
+
+</Project>
