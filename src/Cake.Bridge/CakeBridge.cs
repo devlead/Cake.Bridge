@@ -10,41 +10,7 @@ using Cake.Diagnostics;
 
 public static class CakeBridge
 {
-    private static readonly ICakeLog log = new CakeBuildLog(new Cake.CakeConsole());
-    private static readonly IFileSystem fileSystem = new FileSystem();
-    private static readonly ICakeEnvironment environment = new CakeEnvironment(
-        new CakePlatform(),
-        new CakeRuntime(),
-        log
-        );
-    private static readonly IGlobber globber = new Globber(fileSystem, environment);
-    private static readonly ICakeContext context = new CakeContext(
-            fileSystem,
-            environment,
-            globber,
-            log,
-            new BridgeArguments(),
-            new ProcessRunner(environment, log),
-            new WindowsRegistry(),
-            new ToolLocator(
-                environment,
-                new ToolRepository(environment),
-                new ToolResolutionStrategy(
-                    fileSystem,
-                    environment,
-                    globber,
-                    new BridgeConfiguration()
-                    )
-                )
-        );
-
-    public static IScriptHost ScriptHost = new BridgeScriptHost(
-        new CakeEngine(log),
-        context,
-        new DefaultExecutionStrategy(log),
-        new BridgeReportPrinter(context)
-        );
-
+    public static IScriptHost ScriptHost { get; } = GetScriptHost();
     public static ICakeContext Context => ScriptHost.Context;
     public static IReadOnlyList<CakeTask> Tasks => ScriptHost.Tasks;
 
@@ -76,5 +42,43 @@ public static class CakeBridge
     public static CakeReport RunTarget(string target)
     {
         return ScriptHost.RunTarget(target);
+    }
+
+    public static IScriptHost GetScriptHost()
+    {
+        ICakeLog log = new CakeBuildLog(new Cake.CakeConsole());
+        IFileSystem fileSystem = new FileSystem();
+        ICakeEnvironment environment = new CakeEnvironment(
+            new CakePlatform(),
+            new CakeRuntime(),
+            log
+            );
+        IGlobber globber = new Globber(fileSystem, environment);
+        ICakeContext context = new CakeContext(
+                fileSystem,
+                environment,
+                globber,
+                log,
+                new BridgeArguments(),
+                new ProcessRunner(environment, log),
+                new WindowsRegistry(),
+                new ToolLocator(
+                    environment,
+                    new ToolRepository(environment),
+                    new ToolResolutionStrategy(
+                        fileSystem,
+                        environment,
+                        globber,
+                        new BridgeConfiguration()
+                        )
+                    )
+            );
+
+        return new BridgeScriptHost(
+                new CakeEngine(log),
+                context,
+                new DefaultExecutionStrategy(log),
+                new BridgeReportPrinter(context)
+                );
     }
 }
