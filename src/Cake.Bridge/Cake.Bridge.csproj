@@ -27,6 +27,10 @@
       <Pack>true</Pack>
       <PackagePath>content\</PackagePath>
     </Content>
+    <Content Include="..\cake.ps1">
+      <Pack>true</Pack>
+      <PackagePath>content\</PackagePath>
+    </Content>
   </ItemGroup>
 
 </Project>
