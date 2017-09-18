@@ -19,7 +19,7 @@ Function NugetInstall
 }
 
 [string] $CakeVersion       = "0.22.2"
-[string] $BridgeVersion     = "0.0.7-alpha"
+[string] $BridgeVersion     = "0.0.8-alpha"
 [string] $VSWhereVersion    = "2.0.2"
 
 [string] $PSScriptRoot      = Split-Path $MyInvocation.MyCommand.Path -Parent
