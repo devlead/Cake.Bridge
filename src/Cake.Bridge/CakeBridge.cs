@@ -6,8 +6,8 @@ using Cake.Core.Scripting;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
-using Cake.Diagnostics;
 
+// ReSharper disable once CheckNamespace
 public static class CakeBridge
 {
     public static IScriptHost ScriptHost { get; } = GetScriptHost();
@@ -46,7 +46,8 @@ public static class CakeBridge
 
     public static IScriptHost GetScriptHost()
     {
-        ICakeLog log = new CakeBuildLog(new Cake.CakeConsole());
+        var console = new CakeConsole();
+        ICakeLog log = new CakeBuildLog(console);
         IFileSystem fileSystem = new FileSystem();
         ICakeEnvironment environment = new CakeEnvironment(
             new CakePlatform(),
@@ -78,7 +79,7 @@ public static class CakeBridge
                 new CakeEngine(log),
                 context,
                 new DefaultExecutionStrategy(log),
-                new BridgeReportPrinter(context)
+                new CakeReportPrinter(console, context)
                 );
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;net46</TargetFrameworks>
     <AssemblyName>Cake.Bridge</AssemblyName>
     <PackageId>Cake.Bridge</PackageId>
     <PackageTags>Cake;Build</PackageTags>
@@ -18,8 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.21.1" />
-    <PackageReference Include="Cake.Core" Version="0.21.1" />
+    <Compile Remove="BridgeReportPrinter.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +30,10 @@
       <Pack>true</Pack>
       <PackagePath>content\</PackagePath>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Common" Version="0.22.2" />
   </ItemGroup>
 
 </Project>

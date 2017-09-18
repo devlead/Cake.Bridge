@@ -1,17 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Bridge", "Cake.Bridge\Cake.Bridge.csproj", "{C99AE694-B461-49EC-9633-D72ADC4AAFE8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CakeConsoleRunner", "CakeConsoleRunner\CakeConsoleRunner.csproj", "{B806E492-A0E3-490C-96FA-E9DBFCD10CB1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67F8B8E2-34F7-4CCB-850C-8DC5651B1FB1}"
-	ProjectSection(SolutionItems) = preProject
-		..\build.csx = ..\build.csx
-        cake.fsx = cake.fsx
-        cake.ps1 = cake.ps1
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,5 +43,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A77FC07-57A2-41A1-B351-E4568DB7A8CD}
 	EndGlobalSection
 EndGlobal

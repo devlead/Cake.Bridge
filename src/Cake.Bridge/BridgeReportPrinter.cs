@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using Cake.Core;
 using Cake.Core.Diagnostics;
-
+/*
 namespace Cake.Bridge
 {
     internal class BridgeReportPrinter : ICakeReportPrinter
@@ -66,3 +66,4 @@ namespace Cake.Bridge
         }
     }
 }
+*/

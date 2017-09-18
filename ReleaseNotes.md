@@ -1,3 +1,8 @@
+### New in 0.0.7 (Released 2017/09/18)
+* Updated Cake to 0.22.2
+* Updated .NET 4.5 to 4.6
+* Removed Logging, Console and Reporter classes as those now are publically available in Cake.Core
+
 ### New in 0.0.6 (Released 2017/08/28)
 * Updated Cake to 0.21.1
 
