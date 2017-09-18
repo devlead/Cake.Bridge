@@ -1,3 +1,6 @@
+### New in 0.0.8 (Released 2017/09/18)
+* Updated PowerShell and F# scripts
+
 ### New in 0.0.7 (Released 2017/09/18)
 * Updated Cake to 0.22.2
 * Updated .NET 4.5 to 4.6

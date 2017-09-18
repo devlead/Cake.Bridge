@@ -18,15 +18,15 @@ Function NugetInstall
      Remove-Item "$ToolsPath\$PackageId.zip"
 }
 
-[string] $CakeVersion       = "0.20.0"
-[string] $BridgeVersion     = "0.0.2-alpha"
+[string] $CakeVersion       = "0.22.2"
+[string] $BridgeVersion     = "0.0.7-alpha"
 [string] $VSWhereVersion    = "2.0.2"
 
 [string] $PSScriptRoot      = Split-Path $MyInvocation.MyCommand.Path -Parent
 [string] $ToolsPath         = Join-Path $PSScriptRoot "tools"
-[string] $CakeCorePath      = Join-Path $ToolsPath "Cake.Core.$CakeVersion/lib/net45/Cake.Core.dll"
-[string] $CakeCommonPath    = Join-Path $ToolsPath "Cake.Common.$CakeVersion/lib/net45/Cake.Common.dll"
-[string] $CakeBridgePath    = Join-Path $ToolsPath "Cake.Bridge.$BridgeVersion/lib/net45/Cake.Bridge.dll"
+[string] $CakeCorePath      = Join-Path $ToolsPath "Cake.Core.$CakeVersion/lib/net46/Cake.Core.dll"
+[string] $CakeCommonPath    = Join-Path $ToolsPath "Cake.Common.$CakeVersion/lib/net46/Cake.Common.dll"
+[string] $CakeBridgePath    = Join-Path $ToolsPath "Cake.Bridge.$BridgeVersion/lib/net46/Cake.Bridge.dll"
 [string] $VSWherePath       = Join-Path $ToolsPath "vswhere.$VSWhereVersion/tools/vswhere.exe"
 
 if (!(Test-Path $ToolsPath))
