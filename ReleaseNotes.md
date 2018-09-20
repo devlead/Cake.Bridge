@@ -1,3 +1,9 @@
+### New in 0.0.10 (Released 2018/09/20)
+* Added typed context support
+
+### New in 0.0.9 (Released 2018/09/20)
+* Updated Cake to 0.30.0
+
 ### New in 0.0.8 (Released 2017/09/18)
 * Updated PowerShell and F# scripts
 

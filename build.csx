@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////
 // DEPENDENCIES
 //////////////////////////////////////////////////////////////////////
-#r "tools/Cake.Core.0.22.2/lib/net46/Cake.Core.dll"
-#r "tools/Cake.Common.0.22.2/lib/net46/Cake.Common.dll"
-#r "tools/Cake.Bridge.0.0.8-alpha/lib/net46/Cake.Bridge.dll"
+#r "tools/Cake.Core.0.30.0/lib/net46/Cake.Core.dll"
+#r "tools/Cake.Common.0.30.0/lib/net46/Cake.Common.dll"
+#r "tools/Cake.Bridge.0.0.10-alpha/lib/net46/Cake.Bridge.dll"
 
 //////////////////////////////////////////////////////////////////////
 // NAMESPACE IMPORTS
@@ -13,6 +13,7 @@ using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Build;
+using Cake.Common.Tools.DotNetCore.MSBuild;
 using Cake.Common.Tools.DotNetCore.Pack;
 using Cake.Core;
 using Cake.Core.IO;
@@ -24,16 +25,6 @@ using static CakeBridge;
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
 var target = Context.Argument<string>("target", "Default");
-var configuration = Context.Argument<string>("configuration", "Release");
-
-//////////////////////////////////////////////////////////////////////
-// GLOBALS
-//////////////////////////////////////////////////////////////////////
-DirectoryPath nugetRoot = Context.MakeAbsolute(Context.Directory("./nuget"));
-FilePath solution = null;
-string  semVersion,
-        assemblyVersion,
-        fileVersion;
 
 //////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -42,19 +33,25 @@ string  semVersion,
 Setup(context =>
 {
     context.Information("Setting up...");
-    solution = Context
-                .GetFiles("./src/*.sln")
-                .FirstOrDefault();
-    if (solution == null)
-        throw new Exception("Failed to find solution");
-
 
     var releaseNotes = Context.ParseReleaseNotes("./ReleaseNotes.md");
-    assemblyVersion =releaseNotes.Version.ToString();
-    fileVersion = assemblyVersion;
-    semVersion = assemblyVersion + "-alpha";
+    var releaseVersion =releaseNotes.Version.ToString();
 
-    context.Information("Executing build {0}...", semVersion);
+    var buildData = new BuildData(
+            Context.MakeAbsolute(Context.Directory("./nuget")),
+            Context.GetFiles("./src/*.sln")
+                    .FirstOrDefault()
+                    ?? throw new Exception("Failed to find solution"),
+            releaseVersion + "-alpha",
+            releaseVersion,
+            releaseVersion,
+            string.Join("\n", releaseNotes.Notes.ToArray()).Replace("\"", "\"\""),
+            Context.Argument<string>("configuration", "Release"));
+
+
+    context.Information("Executing build {0} ({1})...", buildData.SemVersion, buildData.Configuration);
+
+    return buildData;
 });
 
 Teardown(context =>
@@ -67,40 +64,37 @@ Teardown(context =>
 //////////////////////////////////////////////////////////////////////
 
 var clean = Task("Clean")
-    .Does(() =>
+    .Does<BuildData>(buildData =>
     {
-        Context.CleanDirectories("./src/**/bin/" + configuration);
-        Context.CleanDirectories("./src/**/obj/" + configuration);
-        Context.CleanDirectory(nugetRoot);
+        Context.CleanDirectories("./src/**/bin/" + buildData.Configuration);
+        Context.CleanDirectories("./src/**/obj/" + buildData.Configuration);
+        Context.CleanDirectory(buildData.NugetRoot);
     });
 
 var restore = Task("Restore")
     .IsDependentOn(clean)
-    .Does(() =>
+    .Does<BuildData>(buildData =>
     {
-        Context.DotNetCoreRestore(solution.FullPath);
+        Context.DotNetCoreRestore(buildData.Solution.FullPath);
     });
 
 var build = Task("Build")
     .IsDependentOn(restore)
-    .Does(() =>
+    .Does<BuildData>(buildData =>
     {
-        Context.DotNetCoreBuild(solution.FullPath, new DotNetCoreBuildSettings {
-            Configuration = configuration,
-            ArgumentCustomization = args => args
-                .Append("/p:Version={0}", semVersion)
-                .Append("/p:AssemblyVersion={0}", assemblyVersion)
-                .Append("/p:FileVersion={0}", fileVersion)
+        Context.DotNetCoreBuild(buildData.Solution.FullPath, new DotNetCoreBuildSettings {
+            Configuration = buildData.Configuration,
+            MSBuildSettings = buildData.MSBuildSettings
         });
     });
 
 var pack = Task("Pack")
     .IsDependentOn(build)
-    .Does(() =>
+    .Does<BuildData>(buildData =>
     {
-        if (!Context.DirectoryExists(nugetRoot))
+        if (!Context.DirectoryExists(buildData.NugetRoot))
         {
-            Context.CreateDirectory(nugetRoot);
+            Context.CreateDirectory(buildData.NugetRoot);
         }
 
         foreach(var project in Context
@@ -108,19 +102,55 @@ var pack = Task("Pack")
                                 .Where(file=>!file.FullPath.EndsWith("Tests")))
         {
             Context.DotNetCorePack(project.FullPath, new DotNetCorePackSettings {
-                Configuration = configuration,
-                OutputDirectory = nugetRoot,
+                Configuration = buildData.Configuration,
+                OutputDirectory = buildData.NugetRoot,
                 NoBuild = true,
-                ArgumentCustomization = args => args
-                    .Append("/p:Version={0}", semVersion)
-                    .Append("/p:AssemblyVersion={0}", assemblyVersion)
-                    .Append("/p:FileVersion={0}", fileVersion)
+                MSBuildSettings = buildData.MSBuildSettings
             });
         }
     });
 
 Task("Default")
     .IsDependentOn(pack);
+
+
+//////////////////////////////////////////////////////////////////////
+// Shared Build Data helper class
+//////////////////////////////////////////////////////////////////////
+public class BuildData
+{
+    public DirectoryPath NugetRoot { get; }
+    public FilePath Solution { get; }
+    public string SemVersion { get; }
+    public string AssemblyVersion { get; }
+    public string FileVersion { get; }
+    public string ReleaseNotes { get; }
+    public string Configuration { get; }
+    public DotNetCoreMSBuildSettings MSBuildSettings { get; }
+    public BuildData(
+        DirectoryPath nugetRoot,
+        FilePath solution,
+        string semVersion,
+        string assemblyVersion,
+        string fileVersion,
+        string releaseNotes,
+        string configuration
+        )
+    {
+        NugetRoot = nugetRoot;
+        Solution = solution;
+        SemVersion = semVersion;
+        AssemblyVersion = assemblyVersion;
+        FileVersion = fileVersion;
+        ReleaseNotes = releaseNotes;
+        Configuration = configuration;
+        MSBuildSettings = new DotNetCoreMSBuildSettings()
+                        .WithProperty("Version", SemVersion)
+                        .WithProperty("AssemblyVersion", AssemblyVersion)
+                        .WithProperty("FileVersion", FileVersion)
+                        .WithProperty("PackageReleaseNotes", string.Concat("\"", ReleaseNotes, "\""));
+    }
+}
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION

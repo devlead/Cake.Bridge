@@ -15,19 +15,23 @@ namespace CakeConsoleRunner
         static void Main(string[] args)
         {
             var target = Context.Argument<string>("target", "Build");
-            FilePath solution = null;
 
             Setup(context =>
             {
                 context.Information("Setting up...");
-                solution = Context
+
+                return new BuildData(
+                    Context
                             .GetFiles("./src/*.sln")
-                            .FirstOrDefault() ??
+                            .FirstOrDefault()
+                            ??
                             Context
                             .GetFiles("../../src/*.sln")
-                            .FirstOrDefault();
-                if (solution == null)
-                    throw new Exception("Failed to find solution");
+                            .FirstOrDefault()
+                            ??
+                            Context
+                            .GetFiles("../../../../*.sln")
+                            .FirstOrDefault());
             });
 
             Teardown(context =>
@@ -36,16 +40,16 @@ namespace CakeConsoleRunner
             });
 
             var restore = Task("Restore")
-            .Does(() =>
+            .Does<BuildData>(buildData =>
             {
-                Context.DotNetCoreRestore(solution.FullPath);
+                Context.DotNetCoreRestore(buildData.Solution.FullPath);
             });
 
             var build = Task("Build")
                 .IsDependentOn(restore)
-                .Does(() =>
+                .Does<BuildData>(buildData =>
                 {
-                    Context.DotNetCoreBuild(solution.FullPath);
+                    Context.DotNetCoreBuild(buildData.Solution.FullPath);
                 });
 
             RunTarget(target);

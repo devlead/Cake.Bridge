@@ -2,6 +2,7 @@
 using Cake.Core.Scripting;
 using Cake.Common.Diagnostics;
 using System;
+using System.Threading.Tasks;
 
 namespace Cake.Bridge
 {
@@ -9,12 +10,18 @@ namespace Cake.Bridge
     {
         private IExecutionStrategy Strategy { get; }
         private ICakeReportPrinter Reporter { get; }
+        private ICakeArguments Arguments { get; }
 
-        public override CakeReport RunTarget(string target)
+        public override async Task<CakeReport> RunTargetAsync(string target)
         {
             try
             {
-                var report = Engine.RunTarget(Context, Strategy, target);
+                if (Arguments.HasArgument("exclusive") && !StringComparer.OrdinalIgnoreCase.Equals("false", Arguments.GetArgument("exclusive")))
+                {
+                    Settings.UseExclusiveTarget();
+                }
+                Settings.SetTarget(target);
+                var report = await Engine.RunTargetAsync(Context, Strategy, Settings);
                 Reporter.Write(report);
                 return report;
             }
@@ -26,11 +33,12 @@ namespace Cake.Bridge
             }
         }
 
-        public BridgeScriptHost(ICakeEngine engine, ICakeContext context, IExecutionStrategy strategy, ICakeReportPrinter reporter)
+        public BridgeScriptHost(ICakeEngine engine, ICakeContext context, IExecutionStrategy strategy, ICakeReportPrinter reporter, ICakeArguments arguments)
         : base(engine, context)
-    {
+        {
             Strategy = strategy;
             Reporter = reporter;
+            Arguments = arguments;
         }
     }
 }
