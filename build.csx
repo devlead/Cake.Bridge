@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////
 // DEPENDENCIES
 //////////////////////////////////////////////////////////////////////
-#r "tools/Cake.Core.0.30.0/lib/net46/Cake.Core.dll"
-#r "tools/Cake.Common.0.30.0/lib/net46/Cake.Common.dll"
-#r "tools/Cake.Bridge.0.0.10-alpha/lib/net46/Cake.Bridge.dll"
+#r "tools/Cake.Core.0.33.0/lib/net46/Cake.Core.dll"
+#r "tools/Cake.Common.0.33.0/lib/net46/Cake.Common.dll"
+#r "tools/Cake.Bridge.0.0.11-alpha/lib/net46/Cake.Bridge.dll"
 
 //////////////////////////////////////////////////////////////////////
 // NAMESPACE IMPORTS
