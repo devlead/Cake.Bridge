@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////
 // DEPENDENCIES
 //////////////////////////////////////////////////////////////////////
-#r "../../Cake.Core.0.30.0/lib/net46/Cake.Core.dll"
-#r "../../Cake.Common.0.30.0/lib/net46/Cake.Common.dll"
+#r "../../Cake.Core.0.33.0/lib/net46/Cake.Core.dll"
+#r "../../Cake.Common.0.33.0/lib/net46/Cake.Common.dll"
 #r "../lib/net46/Cake.Bridge.dll"
 
 namespace CakeAdapter

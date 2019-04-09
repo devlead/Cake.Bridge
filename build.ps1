@@ -63,7 +63,11 @@ $instance                   = &$VSWherePath -latest -products $ids -requires 'Mi
 [string] $CSIPath           = join-path $instance.installationPath 'MSBuild\15.0\Bin\Roslyn\csi.exe'
 
 if (!(test-path $CSIPath)) {
-  exit 404
+  $CSIPath           = join-path $instance.installationPath 'MSBuild\Current\Bin\Roslyn\csi.exe'
+  if (!(test-path $CSIPath)) {
+   $CSIPath
+    exit 404
+  }
 }
 
 &$CSIPath .\build.csx $args

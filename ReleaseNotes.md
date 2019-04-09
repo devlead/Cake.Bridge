@@ -1,3 +1,6 @@
+### New in 0.0.11 (Released 2019/04/09)
+* Updated Cake to 0.33.0
+
 ### New in 0.0.10 (Released 2018/09/20)
 * Added typed context support
 

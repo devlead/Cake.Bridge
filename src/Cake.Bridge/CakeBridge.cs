@@ -7,6 +7,7 @@ using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
 using System.Threading.Tasks;
+using Cake.Core.Configuration;
 
 // ReSharper disable once CheckNamespace
 public static class CakeBridge
@@ -61,25 +62,28 @@ public static class CakeBridge
             );
         IGlobber globber = new Globber(fileSystem, environment);
         ICakeArguments arguments = new BridgeArguments();
-        ICakeContext context = new CakeContext(
-                fileSystem,
-                environment,
-                globber,
-                log,
-                arguments,
-                new ProcessRunner(environment, log),
-                new WindowsRegistry(),
-                new ToolLocator(
+        ICakeConfiguration configuration = new BridgeConfiguration();
+        IToolLocator tools = new ToolLocator(
                     environment,
                     new ToolRepository(environment),
                     new ToolResolutionStrategy(
                         fileSystem,
                         environment,
                         globber,
-                        new BridgeConfiguration()
+                        configuration
                         )
-                    ),
-                data
+                    );
+        ICakeContext context = new CakeContext(
+                fileSystem,
+                environment,
+                globber,
+                log,
+                arguments,
+                new ProcessRunner(fileSystem, environment, log, tools, configuration),
+                new WindowsRegistry(),
+                tools,
+                data,
+                configuration
             );
 
         return new BridgeScriptHost(
