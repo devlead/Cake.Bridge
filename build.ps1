@@ -18,9 +18,9 @@ Function NugetInstall
      Remove-Item "$ToolsPath\$PackageId.zip"
 }
 
-[string] $CakeVersion       = "0.33.0"
+[string] $CakeVersion       = "0.34.1"
 [string] $BridgeVersion     = "0.0.12-alpha"
-[string] $VSWhereVersion    = "2.5.2"
+[string] $VSWhereVersion    = "2.7.1"
 
 [string] $PSScriptRoot      = Split-Path $MyInvocation.MyCommand.Path -Parent
 [string] $ToolsPath         = Join-Path $PSScriptRoot "tools"
