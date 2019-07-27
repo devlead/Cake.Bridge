@@ -1,19 +1,28 @@
+### New in 0.0.12 (Released 2019/07/27)
+
+* Updated Cake to 0.34.1
+
 ### New in 0.0.11 (Released 2019/04/09)
+
 * Updated Cake to 0.33.0
 
 ### New in 0.0.10 (Released 2018/09/20)
+
 * Added typed context support
 
 ### New in 0.0.9 (Released 2018/09/20)
+
 * Updated Cake to 0.30.0
 
 ### New in 0.0.8 (Released 2017/09/18)
+
 * Updated PowerShell and F# scripts
 
 ### New in 0.0.7 (Released 2017/09/18)
+
 * Updated Cake to 0.22.2
 * Updated .NET 4.5 to 4.6
-* Removed Logging, Console and Reporter classes as those now are publically available in Cake.Core
+* Removed Logging, Console and Reporter classes as those now are publicly available in Cake.Core
 
 ### New in 0.0.6 (Released 2017/08/28)
 * Updated Cake to 0.21.1
