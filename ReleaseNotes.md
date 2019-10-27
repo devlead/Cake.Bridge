@@ -1,3 +1,7 @@
+### New in 0.0.13 (Released 2019/10/27)
+
+* Updated Cake to 0.35.0
+
 ### New in 0.0.12 (Released 2019/07/27)
 
 * Updated Cake to 0.34.1
