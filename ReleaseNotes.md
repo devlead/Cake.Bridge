@@ -1,3 +1,7 @@
+### New in 0.0.14 (Released 2020/01/24)
+
+* Updated Cake to 0.36.0
+
 ### New in 0.0.13 (Released 2019/10/27)
 
 * Updated Cake to 0.35.0
