@@ -10,6 +10,7 @@ You can read more about it in this blog post: [Dispelling the magic! - The layer
 There's a couple examples on how to utilize Cake.Bridge
 
 - F# - [build.fsx](https://github.com/devlead/FsxPoC/blob/master/build.fsx)
+- Visual Basic [Program.vb](https://github.com/devlead/VBPoC/blob/master/build/Program.vb)
 - PowerShell - [build.ps1](https://github.com/devlead/PsPoC/blob/master/build.ps1)
 - CSX (C# Script) - [build.csx](https://github.com/devlead/Cake.Bridge/blob/master/build.csx)
 - C# Console application - [CakeConsoleRunner](https://github.com/devlead/Cake.Bridge/tree/master/src/CakeConsoleRunner)
