@@ -13,10 +13,9 @@ namespace Cake.Bridge
             return Arguments.ContainsKey(name);
         }
 
-        public string GetArgument(string name)
+        public ICollection<string> GetArguments(string name)
         {
-            string value;
-            return Arguments.TryGetValue(name, out value) ? value : null;
+            return Arguments.TryGetValue(name, out var value) ? new[] { value } : Array.Empty<string>();
         }
 
         public BridgeArguments()

@@ -2,6 +2,7 @@
 using Cake.Core.Scripting;
 using Cake.Common.Diagnostics;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cake.Bridge
@@ -16,7 +17,7 @@ namespace Cake.Bridge
         {
             try
             {
-                if (Arguments.HasArgument("exclusive") && !StringComparer.OrdinalIgnoreCase.Equals("false", Arguments.GetArgument("exclusive")))
+                if (Arguments.HasArgument("exclusive") && !StringComparer.OrdinalIgnoreCase.Equals("false", Arguments.GetArguments("exclusive").FirstOrDefault()))
                 {
                     Settings.UseExclusiveTarget();
                 }

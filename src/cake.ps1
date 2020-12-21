@@ -18,8 +18,8 @@ $ErrorActionPreference = "Stop"
 ######################################################################
 ## FETCH DEPENDENCIES
 ######################################################################
-[string] $CakeVersion       = "0.36.0"
-[string] $BridgeVersion     = "0.0.14-alpha"
+[string] $CakeVersion       = '1.0.0-rc0002'
+[string] $BridgeVersion     = '0.0.15-alpha'
 
 [string] $PSScriptRoot      = Split-Path $MyInvocation.MyCommand.Path -Parent
 [string] $ToolsPath         = Join-Path $PSScriptRoot "tools"

@@ -51,15 +51,15 @@ public static class CakeBridge
 
     public static IScriptHost GetScriptHost()
     {
-        var console = new CakeConsole();
-        ICakeLog log = new CakeBuildLog(console);
+        
         IFileSystem fileSystem = new FileSystem();
         ICakeDataService data = new BridgeDataService();
         ICakeEnvironment environment = new CakeEnvironment(
             new CakePlatform(),
-            new CakeRuntime(),
-            log
+            new CakeRuntime()
             );
+        var console = new CakeConsole(environment);
+        ICakeLog log = new CakeBuildLog(console);
         IGlobber globber = new Globber(fileSystem, environment);
         ICakeArguments arguments = new BridgeArguments();
         ICakeConfiguration configuration = new BridgeConfiguration();
@@ -70,7 +70,8 @@ public static class CakeBridge
                         fileSystem,
                         environment,
                         globber,
-                        configuration
+                        configuration,
+                        log
                         )
                     );
         ICakeContext context = new CakeContext(

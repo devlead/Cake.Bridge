@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>net5.0;netstandard2.0;net46</TargetFrameworks>
     <AssemblyName>Cake.Bridge</AssemblyName>
     <PackageId>Cake.Bridge</PackageId>
     <PackageTags>Cake;Build</PackageTags>
@@ -33,7 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.36.0" />
+	  <PackageReference Include="Cake.Core" Version="1.0.0-rc0002" />
+	  <PackageReference Include="Cake.Common" Version="1.0.0-rc0002" />
   </ItemGroup>
 
 </Project>
