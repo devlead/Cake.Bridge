@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cake.Bridge;
 using Cake.Core;
 using Cake.Core.Scripting;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
-using System.Threading.Tasks;
 using Cake.Core.Configuration;
 
 // ReSharper disable once CheckNamespace
@@ -16,10 +16,7 @@ public static class CakeBridge
     public static ICakeContext Context => ScriptHost.Context;
     public static IReadOnlyList<ICakeTaskInfo> Tasks => ScriptHost.Tasks;
 
-    public static CakeTaskBuilder Task(string name)
-    {
-        return ScriptHost.Task(name);
-    }
+    public static CakeTaskBuilder Task(string name) => ScriptHost.Task(name);
 
     public static void Setup(Action<ICakeContext> action) => ScriptHost.Setup(action);
 
@@ -61,8 +58,8 @@ public static class CakeBridge
         var console = new CakeConsole(environment);
         ICakeLog log = new CakeBuildLog(console);
         IGlobber globber = new Globber(fileSystem, environment);
-        ICakeArguments arguments = new BridgeArguments();
-        ICakeConfiguration configuration = new BridgeConfiguration();
+        ICakeArguments arguments = new CakeArguments(BridgeArgumentParser.GetParsedCommandLine());
+        ICakeConfiguration configuration = new CakeConfiguration(new Dictionary<string, string>());
         IToolLocator tools = new ToolLocator(
                     environment,
                     new ToolRepository(environment),

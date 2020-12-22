@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cake.Core;
 
 namespace Cake.Bridge
 {
-    internal class BridgeArguments : ICakeArguments
+    internal class BridgeArgumentParser
     {
-        private IDictionary<string, string> Arguments { get; }
-        public bool HasArgument(string name)
+        public static ILookup<string, string> GetParsedCommandLine()
+            => ParseCommandLine()
+                .ToLookup(
+                    key => key.Key,
+                    value => value.Value,
+                    StringComparer.OrdinalIgnoreCase
+                );
+                
+        private static IEnumerable<KeyValuePair<string, string>> ParseCommandLine()
         {
-            return Arguments.ContainsKey(name);
-        }
-
-        public ICollection<string> GetArguments(string name)
-        {
-            return Arguments.TryGetValue(name, out var value) ? new[] { value } : Array.Empty<string>();
-        }
-
-        public BridgeArguments()
-        {
-            Arguments = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             // Naive PoC  :)
             var args = Environment.GetCommandLineArgs();
             for (int index = 0, peek = 1; index < args.Length; index++, peek++)
@@ -37,7 +32,7 @@ namespace Cake.Bridge
                     value = args[peek];
                 }
 
-                Arguments[key] = value.Trim('"');
+                yield return new KeyValuePair<string, string>(key, value.Trim('"'));
             }
         }
     }
