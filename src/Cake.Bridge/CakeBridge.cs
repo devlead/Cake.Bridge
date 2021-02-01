@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Cake.Bridge;
 using Cake.Core;
@@ -12,7 +13,9 @@ using Cake.Core.Configuration;
 // ReSharper disable once CheckNamespace
 public static class CakeBridge
 {
-    public static IScriptHost ScriptHost { get; } = GetScriptHost();
+    private static IScriptHost _scriptHost = GetScriptHost();
+
+    public static IScriptHost ScriptHost => _scriptHost;
     public static ICakeContext Context => ScriptHost.Context;
     public static IReadOnlyList<ICakeTaskInfo> Tasks => ScriptHost.Tasks;
 
@@ -91,5 +94,13 @@ public static class CakeBridge
                 new CakeReportPrinter(console, context),
                 arguments
                 );
+    }
+
+    /// <summary>
+    /// Replaces the <see cref="ScriptHost"/> with a new one
+    /// </summary>
+    public static void ResetScriptHost()
+    {
+        Interlocked.Exchange(ref _scriptHost, GetScriptHost());
     }
 }
