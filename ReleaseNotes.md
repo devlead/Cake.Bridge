@@ -1,3 +1,7 @@
+### New in 0.0.16 (Released 2021/01/01)
+
+* Added ability to reset the ScriptHost
+
 ### New in 0.0.15 (Released 2020/12/21)
 
 * Updated Cake to 1.0.0-rc0002
