@@ -1,3 +1,10 @@
+### New in 0.0.18 (Released 2021/03/07)
+
+* Updated Cake to 1.1.0
+* Removed BridgeDataService in favor of CakeDataService
+* Emebedded license and package icon
+* Enable SourceLink
+
 ### New in 0.0.17 (Released 2021/03/07)
 
 * Updated Cake to 1.0.0

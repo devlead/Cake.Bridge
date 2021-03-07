@@ -53,7 +53,7 @@ public static class CakeBridge
     {
         
         IFileSystem fileSystem = new FileSystem();
-        ICakeDataService data = new BridgeDataService();
+        ICakeDataService data = new CakeDataService();
         ICakeEnvironment environment = new CakeEnvironment(
             new CakePlatform(),
             new CakeRuntime()

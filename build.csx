@@ -1,14 +1,15 @@
 //////////////////////////////////////////////////////////////////////
 // DEPENDENCIES
 //////////////////////////////////////////////////////////////////////
-#r "tools/Cake.Core.1.0.0-rc0002/lib/net46/Cake.Core.dll"
-#r "tools/Cake.Common.1.0.0-rc0002/lib/net46/Cake.Common.dll"
-#r "tools/Cake.Bridge.0.0.15-alpha/lib/net46/Cake.Bridge.dll"
+#r "tools/Cake.Core.1.0.0/lib/net46/Cake.Core.dll"
+#r "tools/Cake.Common.1.0.0/lib/net46/Cake.Common.dll"
+#r "tools/Cake.Bridge.0.0.17-alpha/lib/net46/Cake.Bridge.dll"
 
 //////////////////////////////////////////////////////////////////////
 // NAMESPACE IMPORTS
 //////////////////////////////////////////////////////////////////////
 using Cake.Common;
+using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Common.Tools.DotNetCore;
@@ -148,7 +149,9 @@ public class BuildData
                         .WithProperty("Version", SemVersion)
                         .WithProperty("AssemblyVersion", AssemblyVersion)
                         .WithProperty("FileVersion", FileVersion)
-                        .WithProperty("PackageReleaseNotes", string.Concat("\"", ReleaseNotes, "\""));
+                        .WithProperty("PackageReleaseNotes", string.Concat("\"", ReleaseNotes, "\""))
+                        .WithProperty("EmbedUntrackedSources", "true")
+                        .WithProperty("ContinuousIntegrationBuild", !Context.BuildSystem().IsLocalBuild  ? "true" : "false");
     }
 }
 

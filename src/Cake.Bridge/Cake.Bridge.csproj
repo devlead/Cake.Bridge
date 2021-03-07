@@ -12,10 +12,16 @@
     <Description>Assembly which makes it easier for other environments and languages to interop with Cake</Description>
     <PackageProjectUrl>https://github.com/devlead/Cake.Bridge</PackageProjectUrl>
     <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/devlead/Cake.Bridge/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/devlead/Cake.Bridge</RepositoryUrl>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageIcon>cake-contrib-medium.png</PackageIcon>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <None Include="../cake-contrib-medium.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="BridgeReportPrinter.cs" />
@@ -33,8 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Cake.Core" Version="1.0.0" />
-	  <PackageReference Include="Cake.Common" Version="1.0.0" />
+	  <PackageReference Include="Cake.Core" Version="1.1.0" />
+	  <PackageReference Include="Cake.Common" Version="1.1.0" />
+	  <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
