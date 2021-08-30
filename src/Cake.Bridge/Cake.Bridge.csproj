@@ -18,7 +18,7 @@
 	<PackageIcon>cake-contrib-medium.png</PackageIcon>
 	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
-	
+
   <ItemGroup>
     <None Include="../cake-contrib-medium.png" Pack="true" PackagePath=""/>
   </ItemGroup>
@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Cake.Core" Version="1.1.0" />
-	  <PackageReference Include="Cake.Common" Version="1.1.0" />
+	  <PackageReference Include="Cake.Core" Version="1.2.0" />
+	  <PackageReference Include="Cake.Common" Version="1.2.0" />
 	  <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
