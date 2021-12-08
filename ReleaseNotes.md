@@ -1,6 +1,7 @@
 ### New in 0.0.20 (Released 2021/12/08)
 
 * Updated Cake to 1.3.0
+* Add net6.0 TargetFramework
 
 ### New in 0.0.19 (Released 2021/08/30)
 
