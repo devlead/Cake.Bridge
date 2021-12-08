@@ -2,7 +2,7 @@
 using Cake.Common;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore;
+using Cake.Common.Tools.DotNet;
 using Cake.Core;
 using CakeConsoleRunner;
 using static CakeBridge;
@@ -35,14 +35,14 @@ Teardown(context =>
 var restore = Task("Restore")
     .Does<BuildData>(buildData =>
     {
-        Context.DotNetCoreRestore(buildData.Solution.FullPath);
+        Context.DotNetRestore(buildData.Solution.FullPath);
     });
 
 var build = Task("Build")
     .IsDependentOn(restore)
     .Does<BuildData>(buildData =>
     {
-        Context.DotNetCoreBuild(buildData.Solution.FullPath);
+        Context.DotNetBuild(buildData.Solution.FullPath);
     });
 
 RunTarget(target);

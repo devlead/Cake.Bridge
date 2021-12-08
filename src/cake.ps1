@@ -18,14 +18,14 @@ $ErrorActionPreference = "Stop"
 ######################################################################
 ## FETCH DEPENDENCIES
 ######################################################################
-[string] $CakeVersion       = '1.3.0'
-[string] $BridgeVersion     = '0.0.20-alpha'
+[string] $CakeVersion       = '2.0.0'
+[string] $BridgeVersion     = '0.0.21-alpha'
 
 [string] $PSScriptRoot      = Split-Path $MyInvocation.MyCommand.Path -Parent
 [string] $ToolsPath         = Join-Path $PSScriptRoot "tools"
-[string] $CakeCorePath      = Join-Path $ToolsPath "Cake.Core.$CakeVersion/lib/net46/Cake.Core.dll"
-[string] $CakeCommonPath    = Join-Path $ToolsPath "Cake.Common.$CakeVersion/lib/net46/Cake.Common.dll"
-[string] $CakeBridgePath    = Join-Path $ToolsPath "Cake.Bridge.$BridgeVersion/lib/net46/Cake.Bridge.dll"
+[string] $CakeCorePath      = Join-Path $ToolsPath "Cake.Core.$CakeVersion/lib/netcoreapp3.1/Cake.Core.dll"
+[string] $CakeCommonPath    = Join-Path $ToolsPath "Cake.Common.$CakeVersion/lib/netcoreapp3.1/Cake.Common.dll"
+[string] $CakeBridgePath    = Join-Path $ToolsPath "Cake.Bridge.$BridgeVersion/lib/netcoreapp3.1/Cake.Bridge.dll"
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 Function Unzip

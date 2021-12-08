@@ -1,3 +1,11 @@
+### New in 0.0.21 (Released 2021/12/08)
+
+* Updated Cake to 2.0.0
+* Add netcoreapp3.1 TargetFramework
+* Drop netstandard2.0 & net46 TargetFramework
+* Only support PowerShell Core
+* Only support .NET 6 FSI
+
 ### New in 0.0.20 (Released 2021/12/08)
 
 * Updated Cake to 1.3.0
