@@ -14,6 +14,7 @@
     <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/devlead/Cake.Bridge</RepositoryUrl>
+    <NoWarn>$(NoWarn);NU5110;NU5111</NoWarn>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageIcon>cake-contrib-medium.png</PackageIcon>
 	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
