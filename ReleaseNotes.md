@@ -1,3 +1,7 @@
+### New in 0.0.20 (Released 2021/12/08)
+
+* Updated Cake to 1.3.0
+
 ### New in 0.0.19 (Released 2021/08/30)
 
 * Updated Cake to 1.2.0
