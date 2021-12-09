@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 // DEPENDENCIES
 //////////////////////////////////////////////////////////////////////
-#r "nuget: Cake.Bridge, 0.0.20-alpha"
+#r "nuget: Cake.Bridge, 0.0.21-alpha"
 
 //////////////////////////////////////////////////////////////////////
 // NAMESPACE IMPORTS
@@ -10,10 +10,10 @@ using Cake.Common;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Build;
-using Cake.Common.Tools.DotNetCore.MSBuild;
-using Cake.Common.Tools.DotNetCore.Pack;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Build;
+using Cake.Common.Tools.DotNet.MSBuild;
+using Cake.Common.Tools.DotNet.Pack;
 using Cake.Core;
 using Cake.Core.IO;
 using System;
@@ -74,14 +74,14 @@ var restore = Task("Restore")
     .IsDependentOn(clean)
     .Does<BuildData>(buildData =>
     {
-        Context.DotNetCoreRestore(buildData.Solution.FullPath);
+        Context.DotNetRestore(buildData.Solution.FullPath);
     });
 
 var build = Task("Build")
     .IsDependentOn(restore)
     .Does<BuildData>(buildData =>
     {
-        Context.DotNetCoreBuild(buildData.Solution.FullPath, new DotNetCoreBuildSettings {
+        Context.DotNetBuild(buildData.Solution.FullPath, new DotNetBuildSettings {
             Configuration = buildData.Configuration,
             MSBuildSettings = buildData.MSBuildSettings
         });
@@ -100,7 +100,7 @@ var pack = Task("Pack")
                                 .GetFiles("./src/**/Cake.*.csproj")
                                 .Where(file=>!file.FullPath.EndsWith("Tests")))
         {
-            Context.DotNetCorePack(project.FullPath, new DotNetCorePackSettings {
+            Context.DotNetPack(project.FullPath, new DotNetPackSettings {
                 Configuration = buildData.Configuration,
                 OutputDirectory = buildData.NugetRoot,
                 NoBuild = true,
@@ -125,7 +125,7 @@ public class BuildData
     public string FileVersion { get; }
     public string ReleaseNotes { get; }
     public string Configuration { get; }
-    public DotNetCoreMSBuildSettings MSBuildSettings { get; }
+    public DotNetMSBuildSettings MSBuildSettings { get; }
     public BuildData(
         DirectoryPath nugetRoot,
         FilePath solution,
@@ -143,7 +143,7 @@ public class BuildData
         FileVersion = fileVersion;
         ReleaseNotes = releaseNotes;
         Configuration = configuration;
-        MSBuildSettings = new DotNetCoreMSBuildSettings()
+        MSBuildSettings = new DotNetMSBuildSettings()
                         .WithProperty("Version", SemVersion)
                         .WithProperty("AssemblyVersion", AssemblyVersion)
                         .WithProperty("FileVersion", FileVersion)
