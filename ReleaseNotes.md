@@ -1,4 +1,4 @@
-### New in 0.0.21 (Released 2021/12/08)
+### New in 0.0.21 (Released 2021/12/09)
 
 * Updated Cake to 2.0.0
 * Add netcoreapp3.1 TargetFramework
